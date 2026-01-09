@@ -1,4 +1,4 @@
-# Digits of \pi
+# Digits of $\pi$
 Translated from Bellard's [implementation in c](pi.c) to zig.
 
 # Translation Notes:
@@ -34,3 +34,4 @@ while (true) {
     }
 }
 ```
+using the final if statement to be functionally equivalent.
