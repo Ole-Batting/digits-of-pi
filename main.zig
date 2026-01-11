@@ -25,33 +25,30 @@ fn mulMod(a: i32, b: i32, m: i32) i32 {
     return @as(i32, @intFromFloat(@mod((a_f * b_f), m_f)));
 }
 
-fn invMod(x: i32, y: i32) i32 {
-    var u: i32 = x;
-    var v: i32 = y;
-    var c: i32 = 1;
-    var a: i32 = 0;
+fn invMod(x: i32, m: i32) i32 {
+    var t: i32 = 0;
+    var newt: i32 = 1;
+    var r: i32 = m;
+    var newr: i32 = x;
 
     var q: i32 = undefined;
-    var t: i32 = undefined;
-    while (true) {
-        q = @divTrunc(v, u);
+    var tmp: i32 = undefined;
+    while (newr != 0) {
+        q = @divTrunc(r, newr);
 
-        t = c;
-        c = a - q * c;
-        a = t;
+        tmp = newt;
+        newt = t - q * newt;
+        t = tmp;
 
-        t = u;
-        u = v - q * u;
-        v = t;
-        if (u == 0) {
-            break;
-        }
+        tmp = newr;
+        newr = r - q * newr;
+        r = tmp;
     }
-    a = @mod(a, y);
-    if (a < 0) {
-        a = y + a;
+
+    if (t < 0) {
+        t = t + m;
     }
-    return a;
+    return t;
 }
 
 fn powMod(a: i32, b: i32, m: i32) i32 {
