@@ -25,6 +25,7 @@ fn mulMod(a: i32, b: i32, m: i32) i32 {
     return @as(i32, @intFromFloat(@mod((a_f * b_f), m_f)));
 }
 
+// return the inverse of x mod y
 fn invMod(x: i32, m: i32) i32 {
     var t: i32 = 0;
     var newt: i32 = 1;
@@ -51,16 +52,16 @@ fn invMod(x: i32, m: i32) i32 {
     return t;
 }
 
+// return (a^b) mod m
 fn powMod(a: i32, b: i32, m: i32) i32 {
     var r: i32 = 1;
-    var aa: i32 = a;
-    var c: i32 = b;
-    while (true) {
-        if (c & 1 == 1)
+    var aa: i32 = @mod(a, m);
+    var bb: i32 = b;
+    while (bb > 0) {
+        if (@mod(bb, 2) == 1) {
             r = mulMod(r, aa, m);
-        c = c >> 1;
-        if (c == 0)
-            break;
+        }
+        bb = bb >> 1;
         aa = mulMod(aa, aa, m);
     }
     return r;
